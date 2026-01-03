@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Relatório de Performance - Viviane Brasileiro</title>
     <link rel="icon" href="https://i.imgur.com/2kGS2bL.png" type="image/png" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,11 +11,13 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#0D9488',
-                        secondary: '#14B8A6',
-                        accent: '#E0F2F2',
+                        primary: '#00C2B9',
+                        secondary: '#00A89D',
+                        accent: '#E0F9F8',
+                        orange: '#FFB000',
+                        orangeDark: '#FF8C00',
                         light: '#F8FAFC',
-                        dark: '#0F172A',
+                        dark: '#1e1e1e',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -24,221 +26,287 @@
             },
         };
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        body {
-            background: linear-gradient(135deg, #f0f9ff 0%, #f7f9fb 100%);
-            font-family: 'Inter', sans-serif;
-        }
-        .metric-card {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-        }
-        .metric-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-        }
-        .table-row:nth-child(even) {
-            background-color: #fafafa;
-        }
-        .table-row:hover {
-            background-color: #f0fdfa;
-        }
-        .header-image {
-            width: 100%;
-            max-width: 200px;
-            height: auto;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        .technical-image {
-            width: 100%;
-            height: auto;
-            max-height: 400px;
-            object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-        .indicator-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.25rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .indicator-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+        body { background: linear-gradient(135deg, #f0fdfc 0%, #e6f7f6 50%, #f7f9fb 100%); font-family: 'Inter', sans-serif; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
+        .animate-scaleIn { animation: scaleIn 0.5s ease-out forwards; }
+        .delay-100 { animation-delay: 0.1s; opacity: 0; }
+        .delay-200 { animation-delay: 0.2s; opacity: 0; }
+        .delay-300 { animation-delay: 0.3s; opacity: 0; }
+        .delay-400 { animation-delay: 0.4s; opacity: 0; }
+        .delay-500 { animation-delay: 0.5s; opacity: 0; }
+        .delay-600 { animation-delay: 0.6s; opacity: 0; }
+        .metric-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); position: relative; overflow: hidden; }
+        .metric-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+        .metric-card:hover::before { left: 100%; }
+        .metric-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px -5px rgba(0, 194, 185, 0.2), 0 10px 20px -6px rgba(0, 194, 185, 0.15); }
+        .header-gradient { background: linear-gradient(-45deg, #ffffff, #f0fdfc, #e0f9f8, #ffffff); background-size: 400% 400%; animation: gradientShift 8s ease infinite; }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .header-logo { width: 90px; height: 90px; object-fit: contain; border-radius: 50%; box-shadow: 0 8px 24px rgba(0, 194, 185, 0.3); transition: transform 0.3s ease; }
+        .header-logo:hover { transform: scale(1.08) rotate(3deg); }
+        .technical-image { width: 100%; height: auto; max-height: 500px; object-fit: contain; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); border: 2px solid rgba(0, 194, 185, 0.1); transition: all 0.3s ease; }
+        .technical-image:hover { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); }
+        .funnel-card { background: white; border-radius: 1.25rem; padding: 2rem 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-left: 5px solid #FFB000; position: relative; overflow: hidden; }
+        .funnel-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, #FFB000, #FF8C00); transition: width 0.4s ease; }
+        .funnel-card:hover::after { width: 100%; }
+        .funnel-card:hover { transform: translateY(-8px); box-shadow: 0 16px 32px rgba(255, 176, 0, 0.15); border-left-color: #FF8C00; }
+        .funnel-icon { width: 64px; height: 64px; background: linear-gradient(135deg, #FFB000 0%, #FF8C00 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 6px 20px rgba(255, 176, 0, 0.4); transition: all 0.3s ease; }
+        .funnel-card:hover .funnel-icon { transform: scale(1.15) rotate(5deg); box-shadow: 0 10px 30px rgba(255, 176, 0, 0.5); }
+        .metric-value { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .gradient-title { background: linear-gradient(135deg, #00C2B9 0%, #00A89D 50%, #008B82 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .badge { transition: all 0.3s ease; }
+        .badge:hover { transform: scale(1.05); }
+        .progress-bar { transition: width 1s ease-out; }
     </style>
 </head>
 <body class="text-gray-800">
-
     <div class="container mx-auto px-4 md:px-8 py-6 max-w-7xl">
-        <!-- Cabeçalho com Imagem + Título -->
-        <header class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 bg-white rounded-2xl p-6 shadow-lg">
-            <div class="w-full md:w-1/3 flex justify-center">
-                <img src="https://i.imgur.com/2kGS2bL.png" alt="Logo Viviane Brasileiro" class="header-image" />
+        <!-- CABEÇALHO -->
+        <header class="header-gradient flex flex-col md:flex-row items-center justify-between gap-6 mb-10 rounded-2xl p-8 shadow-xl animate-fadeInUp relative overflow-hidden">
+            <div class="w-full md:w-1/4 flex justify-center">
+                <img src="https://i.imgur.com/2kGS2bL.png" alt="Logo Viviane Brasileiro" class="header-logo" />
             </div>
-
-            <div class="w-full md:w-2/3 text-center md:text-left">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900">
-                    Loja <span class="text-primary">Viviane Brasileiro</span>
+            <div class="w-full md:w-3/4 text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-black text-gray-900">
+                    <span class="gradient-title">Viviane Brasileiro</span>
                 </h1>
-                <p class="text-lg text-gray-600 mt-2">Relatório de Performance de Anúncios</p>
-                <p class="text-gray-500 mt-1">
-                    Período:
-                    <span class="font-medium">4 de nov. de 2025</span>
-                    a
-                    <span class="font-medium">3 de dez. de 2025</span>
-                </p>
-                <div class="flex items-center justify-center md:justify-start mt-3 text-sm text-gray-500">
-                    <svg class="w-4 h-4 text-primary mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <p class="text-xl font-semibold text-gray-700 mt-2">Relatório de Performance dos Anúncios</p>
+                <p class="text-gray-600 mt-2 text-base"> Período: <span class="font-bold text-primary">1 de dezembro</span> a <span class="font-bold text-primary">31 de dezembro de 2025</span> </p>
+                <div class="inline-flex items-center gap-2 mt-4 bg-primary/10 px-4 py-2 rounded-full">
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span class="font-semibold">Atualizado em:</span>
-                    <span class="ml-1">3 de dezembro de 2025</span>
+                    <span class="text-sm font-bold text-primary">03 de janeiro de 2026</span>
                 </div>
             </div>
         </header>
 
-        <!-- Métricas Principais -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-primary shadow-sm">
-                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Investimento Total</p>
-                <p class="text-3xl font-bold text-gray-900 mt-1">R$ 1.494,22</p>
-                <p class="text-xs text-gray-400 mt-1">Valor gasto em anúncios</p>
+        <!-- BADGES DE CONQUISTA -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 animate-fadeInUp delay-100">
+            <div class="badge bg-gradient-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-300 rounded-xl p-4 text-center">
+                <div class="text-3xl mb-2">🥇</div>
+                <p class="text-xs font-bold text-yellow-800 uppercase">500 OPORTUNIDADES</p>
+                <p class="text-xs text-yellow-700">Conversas WhatsApp</p>
             </div>
-
-            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-secondary shadow-sm">
-                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Conversas Iniciadas</p>
-                <p class="text-3xl font-bold text-gray-900 mt-1">331</p>
-                <p class="text-xs text-gray-400 mt-1">Interações com potenciais pacientes</p>
+            <div class="badge bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 rounded-xl p-4 text-center">
+                <div class="text-3xl mb-2">💎</div>
+                <p class="text-xs font-bold text-green-800 uppercase">R$ 3,04</p>
+                <p class="text-xs text-green-700">Custo por conversa</p>
             </div>
-
-            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-green-500 shadow-sm">
-                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Custo por Conversa</p>
-                <p class="text-3xl font-bold text-gray-900 mt-1">R$ 4,51</p>
-                <p class="text-xs text-gray-400 mt-1">Eficiência de geração de leads</p>
+            <div class="badge bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-4 text-center">
+                <div class="text-3xl mb-2">⚡</div>
+                <p class="text-xs font-bold text-blue-800 uppercase">101.405</p>
+                <p class="text-xs text-blue-700">Impressões geradas</p>
             </div>
-
-            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-amber-500 shadow-sm">
-                <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Cliques (Todos)</p>
-                <p class="text-3xl font-bold text-gray-900 mt-1">1.998</p>
-                <p class="text-xs text-gray-400 mt-1">Interesses gerados</p>
+            <div class="badge bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-300 rounded-xl p-4 text-center">
+                <div class="text-3xl mb-2">💰</div>
+                <p class="text-xs font-bold text-purple-800 uppercase">R$ 1.521,72</p>
+                <p class="text-xs text-purple-700">Investimento total</p>
             </div>
         </section>
 
-        <!-- Indicadores Técnicos -->
-        <section class="mb-12">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">📈 Indicadores Técnicos</h2>
-            <p class="text-sm text-gray-600 mb-6">Métricas agregadas de alcance, engajamento e visibilidade da campanha.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="indicator-card">
-                    <p class="text-sm font-medium text-gray-500">Alcance Total</p>
-                    <p class="text-2xl font-bold text-gray-900 mt-1">22.909</p>
-                    <p class="text-xs text-gray-400 mt-1">Pessoas únicas alcançadas</p>
+        <!-- MÉTRICAS PRINCIPAIS -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-primary shadow-sm animate-fadeInUp delay-100">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Pessoas alcançadas</p>
+                    <span class="text-2xl">👥</span>
                 </div>
-
-                <div class="indicator-card">
-                    <p class="text-sm font-medium text-gray-500">Impressões Totais</p>
-                    <p class="text-2xl font-bold text-gray-900 mt-1">71.106</p>
-                    <p class="text-xs text-gray-400 mt-1">Visualizações dos anúncios</p>
+                <p class="text-4xl font-black metric-value mt-2">60.744</p>
+                <p class="text-xs text-gray-500 mt-2 font-medium">Alcance único das campanhas</p>
+            </div>
+            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-blue-500 shadow-sm animate-fadeInUp delay-200">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Impressões</p>
+                    <span class="text-2xl">👁️</span>
                 </div>
-
-                <div class="indicator-card">
-                    <p class="text-sm font-medium text-gray-500">Visitas ao Perfil Instagram</p>
-                    <p class="text-2xl font-bold text-gray-900 mt-1">1.336</p>
-                    <p class="text-xs text-gray-400 mt-1">Tráfego direto para o perfil</p>
+                <p class="text-4xl font-black metric-value mt-2">101.405</p>
+                <p class="text-xs text-gray-500 mt-2 font-medium">Vezes que apareceu nos feeds</p>
+            </div>
+            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-orange shadow-sm animate-fadeInUp delay-300">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Cliques</p>
+                    <span class="text-2xl">👆</span>
                 </div>
-
-                <div class="indicator-card">
-                    <p class="text-sm font-medium text-gray-500">Custo por Contato (Média)</p>
-                    <p class="text-2xl font-bold text-gray-900 mt-1">R$ 4,51</p>
-                    <p class="text-xs text-gray-400 mt-1">Baseado em conversas por mensagem</p>
+                <p class="text-4xl font-black metric-value mt-2">2.936</p>
+                <p class="text-xs text-gray-500 mt-2 font-medium">Pessoas interagindo</p>
+            </div>
+            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-green-500 shadow-sm animate-fadeInUp delay-400">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Visitas ao Perfil</p>
+                    <span class="text-2xl">🌐</span>
                 </div>
+                <p class="text-4xl font-black metric-value mt-2">1.514</p>
+                <p class="text-xs text-gray-500 mt-2 font-medium">Acessos ao perfil/loja</p>
+            </div>
+            <div class="metric-card bg-white p-6 rounded-2xl border-l-4 border-purple-500 shadow-sm animate-fadeInUp delay-500">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Conversas WhatsApp</p>
+                    <span class="text-2xl">💬</span>
+                </div>
+                <p class="text-4xl font-black metric-value mt-2">500</p>
+                <p class="text-xs text-gray-500 mt-2 font-medium">Pessoas iniciando conversa direto</p>
             </div>
         </section>
 
-        <!-- Tabela Detalhada -->
-        <section class="bg-white rounded-2xl shadow-lg overflow-hidden mb-12">
-            <div class="px-6 py-5 border-b border-gray-100">
-                <h2 class="text-xl font-bold text-gray-800">Desempenho por Conjunto de Anúncios</h2>
-                <p class="text-sm text-gray-500 mt-1">Detalhes dos principais conjuntos ativos</p>
+        <!-- ROI E EFICIÊNCIA -->
+        <section class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-xl p-8 mb-12 text-white animate-fadeInUp delay-200">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black mb-2">💰 Análise de Custos e Resultados</h2>
+                <p class="text-green-100 text-sm">Investimento otimizado para trazer o máximo de resultados</p>
             </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <p class="text-sm font-semibold text-green-100 mb-2">Custo por Conversa (WhatsApp)</p>
+                    <p class="text-4xl font-black mb-2">R$ 3,04</p>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="bg-green-400 text-green-900 px-2 py-1 rounded-full font-bold">✓ Excelente</span>
+                        <span class="text-green-100">Custo médio por lead qualificado</span>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <p class="text-sm font-semibold text-green-100 mb-2">Custo por Clique</p>
+                    <p class="text-4xl font-black mb-2">R$ 0,52</p>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="bg-green-400 text-green-900 px-2 py-1 rounded-full font-bold">✓ Ótimo</span>
+                        <span class="text-green-100">Muito abaixo da média do mercado</span>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                    <p class="text-sm font-semibold text-green-100 mb-2">Custo por Mil Impressões (CPM)</p>
+                    <p class="text-4xl font-black mb-2">R$ 15,00</p>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="bg-green-400 text-green-900 px-2 py-1 rounded-full font-bold">✓ Competitivo</span>
+                        <span class="text-green-100">Alta visibilidade com custo controlado</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 text-center">
+                <p class="text-sm font-semibold text-green-100 mb-3">🎯 Comparado com a média do mercado de moda feminina:</p>
+                <p class="text-2xl font-black mb-2">Você está gerando VOLUME MASSIVO de leads a custo baixíssimo!</p>
+                <p class="text-sm text-green-100 mt-3"> 💎 Total de oportunidades qualificadas: <span class="font-black text-white">500 conversas diretas no WhatsApp</span> </p>
+            </div>
+        </section>
 
-            <div class="md:hidden bg-amber-50 border-l-4 border-amber-400 p-3 rounded mx-6 mb-4">
-                <p class="text-sm text-amber-800 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 0H3m12 0v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2h10a2 2 0 002-2z" />
-                    </svg>
-                    Deslize para o lado para ver todas as colunas.
+        <!-- BLOCO "DIA A DIA" -->
+        <section class="bg-white rounded-2xl shadow-xl p-8 mb-12 animate-fadeInUp delay-400">
+            <h2 class="text-2xl font-black text-gray-800 mb-6 text-center">
+                <span class="gradient-title">📅 O que isso significa no dia a dia</span>
+            </h2>
+            <p class="text-center text-gray-600 mb-8"> Traduzindo os números para entender o impacto real na loja. </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="bg-primary/5 rounded-xl p-6 border-l-4 border-primary">
+                    <p class="text-sm font-semibold text-gray-600 mb-2">Por dia (média)</p>
+                    <p class="text-3xl font-black text-gray-900 mb-1">~16</p>
+                    <p class="text-xs text-gray-600"> Em média, 16 pessoas por dia iniciando conversa no WhatsApp – fluxo constante de clientes interessados! </p>
+                </div>
+                <div class="bg-emerald-50 rounded-xl p-6 border-l-4 border-emerald-500">
+                    <p class="text-sm font-semibold text-gray-600 mb-2">Por semana</p>
+                    <p class="text-3xl font-black text-gray-900 mb-1">~112</p>
+                    <p class="text-xs text-gray-600"> Mais de 100 oportunidades de venda por semana via conversas diretas. </p>
+                </div>
+                <div class="bg-orange-50 rounded-xl p-6 border-l-4 border-orange">
+                    <p class="text-sm font-semibold text-gray-600 mb-2">Visibilidade da marca</p>
+                    <p class="text-3xl font-black text-gray-900 mb-1">101.405</p>
+                    <p class="text-xs text-gray-600"> Vezes que a Viviane Brasileiro apareceu para pessoas interessadas nas roupas. </p>
+                </div>
+            </div>
+            <div class="mt-8 bg-primary/5 border-l-4 border-primary rounded-lg p-6">
+                <p class="text-sm text-gray-700">
+                    <span class="font-black text-primary">💡 Em outras palavras:</span> a cada dia, em média, 16 potenciais clientes batem na porta da loja via WhatsApp. Isso significa um fluxo constante de interesse real nas peças!
                 </p>
             </div>
+        </section>
 
-            <div class="overflow-x-auto px-6">
-                <table class="min-w-full text-sm">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="py-3 px-4 text-left font-semibold text-gray-600">Conjunto de Anúncios</th>
-                            <th class="py-3 px-4 text-left font-semibold text-gray-600">Investimento (BRL)</th>
-                            <th class="py-3 px-4 text-left font-semibold text-gray-600">Conversas</th>
-                            <th class="py-3 px-4 text-left font-semibold text-gray-600">Cliques</th>
-                            <th class="py-3 px-4 text-left font-semibold text-gray-600">CPR (BRL)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr class="table-row hover:bg-accent/50 transition">
-                            <td class="py-4 px-4 font-medium text-gray-900">Fechado</td>
-                            <td class="py-4 px-4 text-gray-700">R$ 937,24</td>
-                            <td class="py-4 px-4 text-primary font-semibold">196</td>
-                            <td class="py-4 px-4 text-gray-700">1.162</td>
-                            <td class="py-4 px-4 text-green-600 font-medium">R$ 4,78</td>
-                        </tr>
-                        <tr class="table-row hover:bg-accent/50 transition">
-                            <td class="py-4 px-4 font-medium text-gray-900">Aberto</td>
-                            <td class="py-4 px-4 text-gray-700">R$ 556,98</td>
-                            <td class="py-4 px-4 text-primary font-semibold">135</td>
-                            <td class="py-4 px-4 text-gray-700">836</td>
-                            <td class="py-4 px-4 text-gray-900 font-medium">R$ 4,13</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- FUNIL NARRATIVO -->
+        <section class="mb-12 animate-fadeInUp delay-300">
+            <div class="bg-gradient-to-r from-primary via-secondary to-primary rounded-2xl p-8 text-center shadow-2xl mb-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-white/10"></div>
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-black text-white mb-2">Em resumo, é como se...</h2>
+                    <p class="text-white/90 text-base">Transformando números em uma história visual</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="funnel-card animate-scaleIn delay-100">
+                    <div class="flex justify-center mb-5">
+                        <div class="funnel-icon">👥</div>
+                    </div>
+                    <h3 class="text-xl font-black text-orange text-center mb-3 uppercase tracking-wide">Pessoas que viram</h3>
+                    <p class="text-gray-700 text-center text-sm leading-relaxed"> Como se <span class="font-black text-gray-900 text-base">60.744 pessoas</span> passassem em frente à sua vitrine de moda. </p>
+                </div>
+                <div class="funnel-card animate-scaleIn delay-200">
+                    <div class="flex justify-center mb-5">
+                        <div class="funnel-icon">👆</div>
+                    </div>
+                    <h3 class="text-xl font-black text-orange text-center mb-3 uppercase tracking-wide">Pessoas que pararam</h3>
+                    <p class="text-gray-700 text-center text-sm leading-relaxed"> <span class="font-black text-gray-900 text-base">2.936 pessoas</span> pararam para olhar mais de perto os vestidos e macacões. </p>
+                </div>
+                <div class="funnel-card animate-scaleIn delay-300">
+                    <div class="flex justify-center mb-5">
+                        <div class="funnel-icon">💎</div>
+                    </div>
+                    <h3 class="text-xl font-black text-orange text-center mb-3 uppercase tracking-wide">Interesse real</h3>
+                    <p class="text-gray-700 text-center text-sm leading-relaxed"> <span class="font-black text-gray-900 text-base">500 pessoas</span> mostraram interesse real visitando o perfil ou chamando no WhatsApp. </p>
+                </div>
             </div>
         </section>
 
-        <!-- Dados Técnicos -->
-        <section class="bg-white rounded-2xl shadow-lg p-6 mb-12">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">📊 Dados Técnicos</h2>
-            <p class="text-sm text-gray-600 mb-6">Visão detalhada dos dados brutos do Facebook Ads Manager.</p>
-            
-            <!-- Primeira imagem -->
-            <div class="flex justify-center mb-8">
-                <img src="https://i.imgur.com/zQsa5GJ.png" alt="Dados Técnicos - Viviane Brasileiro" class="technical-image" />
+        <!-- DADOS TÉCNICOS -->
+        <section class="bg-white rounded-2xl shadow-xl p-8 mb-12 animate-fadeInUp delay-500">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-gray-800 flex items-center gap-3 mb-2">
+                    <span class="text-4xl">📊</span>
+                    <span class="gradient-title">Dados Técnicos</span>
+                </h2>
+                <p class="text-base text-gray-600 pl-12">Visão detalhada dos dados do gerenciador de anúncios.</p>
             </div>
-            <div class="mb-8 text-xs text-gray-500 text-center">
-                Visão geral dos conjuntos de anúncios e principais métricas.
-            </div>
-
-            <!-- Segunda imagem (detalhada) -->
             <div class="flex justify-center mb-4">
-                <img src="https://i.imgur.com/XlBySoQ.png" alt="Dados Técnicos Detalhados - Viviane Brasileiro" class="technical-image" />
+                <img src="https://i.imgur.com/NLc23Y7.png" alt="Dados Técnicos - Viviane Brasileiro" class="technical-image" />
             </div>
-            <div class="text-xs text-gray-500 text-center">
-                Dados técnicos detalhados extraídos do painel de anúncios.
+            <div class="text-sm text-gray-500 text-center mt-4 italic"> Dados técnicos completos mostrando desempenho de cada anúncio e criativo. </div>
+        </section>
+
+        <!-- CARD DE INVESTIMENTO TOTAL -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 text-center mb-8 border-l-4 border-primary animate-fadeInUp delay-600">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="w-full md:w-1/3">
+                    <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Investimento Total</p>
+                    <p class="text-3xl font-bold text-gray-900">R$ 1.521,72</p>
+                    <p class="text-xs text-gray-400 mt-1">Valor investido nos anúncios neste período</p>
+                </div>
+                <div class="hidden md:block w-px h-16 bg-gray-200"></div>
+                <div class="w-full md:w-2/3">
+                    <div class="flex items-center justify-center md:justify-end gap-6 flex-wrap">
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <span class="text-gray-700 font-medium">Neto (85) 9 8150-8799</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm">
+                            <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                            </svg>
+                            <span class="text-gray-700 font-medium">@RocketAnuncios</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Rodapé -->
-        <footer class="mt-12 text-center text-gray-500 text-sm">
-            <p>Relatório gerado automaticamente para <span class="font-semibold text-primary">Clínica Viviane Brasileiro</span></p>
-            <p class="mt-1">© 2025 – Todos os direitos reservados.</p>
+        <!-- RODAPÉ -->
+        <footer class="mt-12 text-center text-gray-600 text-sm animate-fadeInUp delay-600">
+            <div class="inline-flex items-center gap-2 mb-2">
+                <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+                <p class="font-semibold"> Relatório gerado automaticamente para <span class="text-primary font-bold">Viviane Brasileiro</span> </p>
+            </div>
+            <p class="text-xs text-gray-500">© 2026 Rocket Anúncios – Todos os direitos reservados.</p>
         </footer>
     </div>
 </body>
